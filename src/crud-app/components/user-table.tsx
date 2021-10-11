@@ -1,7 +1,19 @@
-import React from 'react';
-import { Table } from 'reactstrap';
+import * as React from 'react';
+import { Table, Button } from 'reactstrap';
+import { UserTableProps, Values } from '../interfaces/interface';
 
-const UserTable = () => {
+const UserTable = ({ users, deleteHandler, editHandler }: UserTableProps) => {
+  const renderUsers = users.map(({firstName, lastName, email, phone}: Values, i: number) => (
+    <tr key={i}>
+      <th scope="row">{i + 1}</th>
+      <td>{firstName}</td>
+      <td>{lastName}</td>
+      <td>{email}</td>
+      <td>{phone}</td>
+      <td className="text-center"><Button onClick={() => deleteHandler(i)} outline color="danger">Delete</Button></td>
+      <td className="text-center"><Button onClick={() => editHandler(i)} outline color="dark">Edit</Button></td>
+    </tr>
+  ));
 	return (
     <Table bordered>
       <thead>
@@ -9,28 +21,14 @@ const UserTable = () => {
           <th>#</th>
           <th>First Name</th>
           <th>Last Name</th>
-          <th>Username</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
+        {renderUsers}
       </tbody>
     </Table>
   );
